@@ -3,558 +3,699 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BlackRoad Quantum - The Revolution is Here</title>
+    <title>BlackRoad OS - Live Agent Grid 🖤🛣️</title>
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
             background: #000000;
             color: #FFFFFF;
-            overflow-x: hidden;
-            position: relative;
+            overflow: hidden;
+            line-height: 1.618;
         }
 
-        /* Matrix Rain Background */
-        #matrix-canvas {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 0;
-            opacity: 0.15;
+        .command-center {
+            height: 100vh;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            grid-template-rows: auto repeat(3, 1fr);
+            gap: 8px;
+            padding: 8px;
         }
 
-        .container {
-            position: relative;
-            z-index: 1;
+        .header {
+            grid-column: 1 / -1;
+            background: linear-gradient(135deg, #FF1D6C 0%, #F5A623 38.2%, #2979FF 61.8%, #9C27B0 100%);
+            padding: 21px 34px;
+            border-radius: 13px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
 
-        /* Hero Section */
-        .hero {
-            min-height: 100vh;
+        .header h1 {
+            font-size: 34px;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+        }
+
+        .system-stats {
+            display: flex;
+            gap: 34px;
+            font-size: 13px;
+        }
+
+        .stat {
             display: flex;
             flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            padding: 40px 20px;
-            position: relative;
-        }
-
-        .hero h1 {
-            font-size: 6em;
-            font-weight: 900;
-            margin-bottom: 20px;
-            background: linear-gradient(135deg, #F5A623 0%, #FF1D6C 25%, #2979FF 50%, #9C27B0 75%, #F5A623 100%);
-            background-size: 300% 300%;
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            animation: gradientShift 8s ease infinite;
-        }
-
-        @keyframes gradientShift {
-            0%, 100% { background-position: 0% 50%; }
-            25% { background-position: 50% 50%; }
-            50% { background-position: 100% 50%; }
-            75% { background-position: 50% 50%; }
-        }
-
-        .hero h2 {
-            font-size: 2.5em;
-            margin-bottom: 30px;
-            color: #F5A623;
-            font-weight: 600;
-        }
-
-        .hero p {
-            font-size: 1.5em;
-            max-width: 900px;
-            margin: 0 auto 40px;
-            line-height: 1.6;
-            color: #e0e0e0;
-        }
-
-        .tagline {
-            font-size: 2em;
-            color: #FF1D6C;
-            font-weight: 700;
-            margin: 30px 0;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-        }
-
-        /* Stats Grid */
-        .stats {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 30px;
-            max-width: 1200px;
-            margin: 60px auto;
-            padding: 0 20px;
-        }
-
-        .stat-card {
-            background: rgba(245, 166, 35, 0.1);
-            border: 2px solid #F5A623;
-            border-radius: 20px;
-            padding: 30px;
-            text-align: center;
-            transition: all 0.3s ease;
-        }
-
-        .stat-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 20px 40px rgba(245, 166, 35, 0.3);
-            border-color: #FF1D6C;
-        }
-
-        .stat-number {
-            font-size: 4em;
-            font-weight: 900;
-            color: #F5A623;
-            margin-bottom: 10px;
+            align-items: flex-end;
         }
 
         .stat-label {
-            font-size: 1.2em;
-            color: #FFFFFF;
+            opacity: 0.8;
+            font-size: 11px;
+        }
+
+        .stat-value {
+            font-size: 21px;
             font-weight: 600;
         }
 
-        /* World Records Section */
-        .world-records {
-            max-width: 1400px;
-            margin: 80px auto;
-            padding: 0 20px;
-        }
-
-        .world-records h2 {
-            font-size: 3.5em;
-            text-align: center;
-            margin-bottom: 60px;
-            background: linear-gradient(135deg, #F5A623, #FF1D6C);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .records-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 30px;
-        }
-
-        .record-card {
-            background: linear-gradient(135deg, rgba(41, 121, 255, 0.1), rgba(156, 39, 176, 0.1));
-            border: 2px solid #2979FF;
-            border-radius: 20px;
-            padding: 30px;
-            transition: all 0.3s ease;
-        }
-
-        .record-card:hover {
-            border-color: #9C27B0;
-            transform: scale(1.05);
-        }
-
-        .record-icon {
-            font-size: 3em;
-            margin-bottom: 15px;
-        }
-
-        .record-title {
-            font-size: 1.4em;
-            color: #F5A623;
-            margin-bottom: 10px;
-            font-weight: 700;
-        }
-
-        .record-desc {
-            font-size: 1.1em;
-            color: #e0e0e0;
-            line-height: 1.5;
-        }
-
-        /* Projects Grid */
-        .projects {
-            max-width: 1400px;
-            margin: 80px auto;
-            padding: 0 20px;
-        }
-
-        .projects h2 {
-            font-size: 3.5em;
-            text-align: center;
-            margin-bottom: 60px;
-            background: linear-gradient(135deg, #FF1D6C, #9C27B0);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .project-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
-            gap: 40px;
-        }
-
-        .project-card {
-            background: rgba(255, 29, 108, 0.1);
-            border: 2px solid #FF1D6C;
-            border-radius: 25px;
-            padding: 40px;
-            transition: all 0.3s ease;
-        }
-
-        .project-card:hover {
-            border-color: #F5A623;
-            box-shadow: 0 20px 60px rgba(255, 29, 108, 0.4);
-        }
-
-        .project-icon {
-            font-size: 4em;
-            margin-bottom: 20px;
-        }
-
-        .project-name {
-            font-size: 2em;
-            color: #F5A623;
-            margin-bottom: 15px;
-            font-weight: 700;
-        }
-
-        .project-desc {
-            font-size: 1.2em;
-            color: #e0e0e0;
-            margin-bottom: 25px;
-            line-height: 1.6;
-        }
-
-        .project-link {
-            display: inline-block;
-            background: linear-gradient(135deg, #F5A623, #FF1D6C);
-            color: #000000;
-            padding: 15px 30px;
-            border-radius: 10px;
-            text-decoration: none;
-            font-weight: 700;
-            font-size: 1.1em;
-            transition: all 0.3s ease;
-        }
-
-        .project-link:hover {
-            transform: scale(1.1);
-            box-shadow: 0 10px 30px rgba(245, 166, 35, 0.5);
-        }
-
-        /* CTA Buttons */
-        .cta-buttons {
+        .agent-window {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 13px;
+            padding: 13px;
             display: flex;
-            gap: 30px;
-            justify-content: center;
-            flex-wrap: wrap;
-            margin: 40px 0;
-        }
-
-        .cta-button {
-            padding: 20px 50px;
-            font-size: 1.5em;
-            font-weight: 700;
-            border-radius: 15px;
-            text-decoration: none;
+            flex-direction: column;
+            overflow: hidden;
+            position: relative;
             transition: all 0.3s ease;
-            border: none;
-            cursor: pointer;
         }
 
-        .cta-primary {
-            background: linear-gradient(135deg, #F5A623, #FF1D6C);
-            color: #000000;
+        .agent-window:hover {
+            border-color: #FF1D6C;
+            box-shadow: 0 0 34px rgba(255, 29, 108, 0.3);
         }
 
-        .cta-primary:hover {
-            transform: scale(1.1);
-            box-shadow: 0 15px 40px rgba(245, 166, 35, 0.6);
+        .agent-window.active {
+            animation: pulse 2s ease-in-out infinite;
         }
 
-        .cta-secondary {
-            background: transparent;
-            border: 3px solid #2979FF;
-            color: #2979FF;
+        @keyframes pulse {
+            0%, 100% { border-color: rgba(255, 255, 255, 0.1); }
+            50% { border-color: #FF1D6C; }
         }
 
-        .cta-secondary:hover {
-            background: #2979FF;
-            color: #FFFFFF;
-            transform: scale(1.1);
+        .agent-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 13px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
         }
 
-        /* Footer */
-        .footer {
-            text-align: center;
-            padding: 60px 20px;
-            margin-top: 100px;
-            border-top: 2px solid #F5A623;
+        .agent-name {
+            font-size: 16px;
+            font-weight: 600;
+            background: linear-gradient(135deg, #FF1D6C 38.2%, #F5A623 61.8%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
 
-        .footer p {
-            font-size: 1.2em;
-            margin: 10px 0;
-            color: #e0e0e0;
+        .agent-status {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 11px;
         }
 
-        .footer .love {
-            font-size: 2em;
-            color: #FF1D6C;
-            margin-top: 20px;
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #00FF00;
+            animation: blink 1s ease-in-out infinite;
         }
 
-        /* Responsive */
-        @media (max-width: 768px) {
-            .hero h1 { font-size: 3em; }
-            .hero h2 { font-size: 1.8em; }
-            .hero p { font-size: 1.2em; }
-            .tagline { font-size: 1.5em; }
-            .stat-number { font-size: 3em; }
-            .world-records h2, .projects h2 { font-size: 2.5em; }
-            .project-grid { grid-template-columns: 1fr; }
-            .records-grid { grid-template-columns: 1fr; }
-            .cta-buttons { flex-direction: column; align-items: center; }
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.3; }
+        }
+
+        .agent-info {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+            margin-bottom: 13px;
+            font-size: 11px;
+        }
+
+        .info-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .info-label {
+            opacity: 0.6;
+        }
+
+        .info-value {
+            font-weight: 600;
+            color: #F5A623;
+        }
+
+        .agent-activity {
+            flex: 1;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 8px;
+            padding: 8px;
+            overflow-y: auto;
+            font-size: 10px;
+            font-family: 'SF Mono', 'Courier New', monospace;
+        }
+
+        .activity-log {
+            display: flex;
+            flex-direction: column-reverse;
+            gap: 3px;
+        }
+
+        .activity-item {
+            padding: 3px 5px;
+            border-left: 2px solid transparent;
+            animation: slideIn 0.3s ease;
+        }
+
+        .activity-item.info { border-left-color: #2979FF; }
+        .activity-item.success { border-left-color: #00FF00; }
+        .activity-item.warning { border-left-color: #F5A623; }
+        .activity-item.error { border-left-color: #FF1D6C; }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .activity-timestamp {
+            opacity: 0.5;
+            margin-right: 5px;
+        }
+
+        .hash-display {
+            position: absolute;
+            bottom: 8px;
+            right: 8px;
+            font-size: 8px;
+            opacity: 0.3;
+            font-family: 'SF Mono', monospace;
+        }
+
+        .metric-bars {
+            display: flex;
+            gap: 3px;
+            margin-top: 5px;
+        }
+
+        .metric-bar {
+            flex: 1;
+            height: 3px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 2px;
+            overflow: hidden;
+        }
+
+        .metric-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #FF1D6C, #F5A623);
+            transition: width 0.5s ease;
+        }
+
+        ::-webkit-scrollbar {
+            width: 5px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: rgba(255, 29, 108, 0.5);
+            border-radius: 3px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #FF1D6C;
         }
     </style>
 </head>
 <body>
-    <canvas id="matrix-canvas"></canvas>
-
-    <div class="container">
-        <!-- Hero Section -->
-        <section class="hero">
-            <h1>⚛️ BLACKROAD QUANTUM</h1>
-            <h2>The Quantum Revolution is Here</h2>
-            <p>
-                For the first time in history, quantum computing is accessible to everyone.
-                Not just tech giants. Not just PhD researchers. <strong>EVERYONE.</strong>
-            </p>
-            <div class="tagline">$200 HARDWARE. 1 DEPENDENCY. INFINITE POSSIBILITIES.</div>
-
-            <div class="cta-buttons">
-                <a href="https://github.com/BlackRoad-OS/blackroad-os-quantum" class="cta-button cta-primary" target="_blank">
-                    🚀 Get Started
-                </a>
-                <a href="circuit-builder.html" class="cta-button cta-secondary">
-                    🔧 Circuit Builder
-                </a>
-                <a href="ULTIMATE_ECOSYSTEM.html" class="cta-button cta-secondary">
-                    🌌 Full Ecosystem
-                </a>
-            </div>
-        </section>
-
-        <!-- Stats Section -->
-        <section class="stats">
-            <div class="stat-card">
-                <div class="stat-number">500,000×</div>
-                <div class="stat-label">Cost Reduction</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-number">3.5×</div>
-                <div class="stat-label">Faster than IBM</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-number">2,400×</div>
-                <div class="stat-label">Quantum Speedup</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-number">0.11ms</div>
-                <div class="stat-label">GHZ Creation</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-number">61</div>
-                <div class="stat-label">Algorithms</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-number">27</div>
-                <div class="stat-label">Tutorials</div>
-            </div>
-        </section>
-
-        <!-- World Records Section -->
-        <section class="world-records">
-            <h2>🏆 World Records Achieved</h2>
-            <div class="records-grid">
-                <div class="record-card">
-                    <div class="record-icon">🥇</div>
-                    <div class="record-title">First Quantum Supremacy on $200 Hardware</div>
-                    <div class="record-desc">Achieved what IBM, Google, and Microsoft require $100M+ machines for - on a Raspberry Pi with Hailo-8.</div>
+    <div class="command-center">
+        <!-- Header -->
+        <div class="header">
+            <h1>🖤🛣️ BlackRoad OS - Live Agent Grid</h1>
+            <div class="system-stats">
+                <div class="stat">
+                    <span class="stat-label">Total Nodes</span>
+                    <span class="stat-value" id="totalNodes">9</span>
                 </div>
-                <div class="record-card">
-                    <div class="record-icon">🌟</div>
-                    <div class="record-title">First Framework with Native Qudit Support</div>
-                    <div class="record-desc">Only quantum framework supporting d→∞ qudit systems. Everyone else? Stuck at d=2.</div>
+                <div class="stat">
+                    <span class="stat-label">Active Agents</span>
+                    <span class="stat-value" id="activeAgents">9</span>
                 </div>
-                <div class="record-card">
-                    <div class="record-icon">⚡</div>
-                    <div class="record-title">Fastest GHZ State Creation</div>
-                    <div class="record-desc">0.11ms for 10-qubit GHZ state. World record performance verified.</div>
+                <div class="stat">
+                    <span class="stat-label">TOPS Available</span>
+                    <span class="stat-value" id="totalTOPS">104</span>
                 </div>
-                <div class="record-card">
-                    <div class="record-icon">🧮</div>
-                    <div class="record-title">Largest Open-Source Algorithm Library</div>
-                    <div class="record-desc">61 production-ready quantum algorithms. More than Qiskit, Cirq, and PennyLane combined.</div>
-                </div>
-                <div class="record-card">
-                    <div class="record-icon">📚</div>
-                    <div class="record-title">Most Comprehensive Quantum Education</div>
-                    <div class="record-desc">Complete 12-week university course. 27 tutorials. 15,000+ lines of documentation.</div>
-                </div>
-                <div class="record-card">
-                    <div class="record-icon">💎</div>
-                    <div class="record-title">Simplest Installation</div>
-                    <div class="record-desc">1 dependency (NumPy). No bloat. No complexity. Just quantum computing.</div>
+                <div class="stat">
+                    <span class="stat-label">Hash Chain</span>
+                    <span class="stat-value" id="hashChain">✓</span>
                 </div>
             </div>
-        </section>
+        </div>
 
-        <!-- Featured Projects Section -->
-        <section class="projects">
-            <h2>🚀 Flagship Projects</h2>
-            <div class="project-grid">
-                <div class="project-card">
-                    <div class="project-icon">⚛️</div>
-                    <div class="project-name">BlackRoad Quantum Framework</div>
-                    <div class="project-desc">
-                        The core quantum computing framework. 600 lines of pure elegance.
-                        Faster, simpler, and more powerful than anything else.
-                    </div>
-                    <a href="https://github.com/BlackRoad-OS/blackroad-os-quantum" class="project-link" target="_blank">
-                        View on GitHub
-                    </a>
-                </div>
-
-                <div class="project-card">
-                    <div class="project-icon">🔧</div>
-                    <div class="project-name">Interactive Circuit Builder</div>
-                    <div class="project-desc">
-                        Drag-and-drop quantum circuit designer. Build, simulate, and export
-                        quantum circuits in seconds. No coding required.
-                    </div>
-                    <a href="circuit-builder.html" class="project-link">
-                        Launch Builder
-                    </a>
-                </div>
-
-                <div class="project-card">
-                    <div class="project-icon">🎓</div>
-                    <div class="project-name">Complete Learning Path</div>
-                    <div class="project-desc">
-                        From zero to quantum expert in 12 weeks. 27 tutorials, 61 algorithms,
-                        complete university curriculum. All free.
-                    </div>
-                    <a href="https://github.com/BlackRoad-OS/blackroad-os-quantum/blob/main/TUTORIALS.md" class="project-link" target="_blank">
-                        Start Learning
-                    </a>
-                </div>
-
-                <div class="project-card">
-                    <div class="project-icon">🧪</div>
-                    <div class="project-name">Live Experiment Results</div>
-                    <div class="project-desc">
-                        REAL quantum experiments running RIGHT NOW on Raspberry Pi.
-                        19.6× average speedup verified. 100% accuracy. This is PROOF.
-                    </div>
-                    <a href="quantum-live-results.html" class="project-link">
-                        View Live Results
-                    </a>
-                </div>
-
-                <div class="project-card">
-                    <div class="project-icon">🏆</div>
-                    <div class="project-name">Quantum Supremacy Results</div>
-                    <div class="project-desc">
-                        The verified proof. Random Circuit Sampling on $200 hardware.
-                        2,400× quantum speedup. World-first achievement.
-                    </div>
-                    <a href="quantum-supremacy.html" class="project-link">
-                        See Proof
-                    </a>
-                </div>
-
-                <div class="project-card">
-                    <div class="project-icon">🥊</div>
-                    <div class="project-name">Framework Showdown</div>
-                    <div class="project-desc">
-                        BlackRoad vs IBM Qiskit vs Google Cirq vs PennyLane. Head-to-head comparison.
-                        Spoiler: We win. Every. Single. Category.
-                    </div>
-                    <a href="framework-showdown.html" class="project-link">
-                        See The Battle
-                    </a>
-                </div>
-
-                <div class="project-card">
-                    <div class="project-icon">🌌</div>
-                    <div class="project-name">Ultimate Ecosystem</div>
-                    <div class="project-desc">
-                        Explore the entire BlackRoad universe. 200+ projects, 8 world records,
-                        complete infrastructure. The revolution is bigger than you think.
-                    </div>
-                    <a href="ULTIMATE_ECOSYSTEM.html" class="project-link">
-                        Explore Universe
-                    </a>
+        <!-- Agent Windows (Brady Bunch Grid) -->
+        <div class="agent-window active" id="alice">
+            <div class="agent-header">
+                <div class="agent-name">Alice (Pi 5)</div>
+                <div class="agent-status">
+                    <span class="status-dot"></span>
+                    <span>ACTIVE</span>
                 </div>
             </div>
-        </section>
+            <div class="agent-info">
+                <div class="info-row">
+                    <span class="info-label">IP:</span>
+                    <span class="info-value">192.168.4.49</span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">Hailo-8:</span>
+                    <span class="info-value">26 TOPS</span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">NVMe:</span>
+                    <span class="info-value">847GB Free</span>
+                </div>
+                <div class="metric-bars">
+                    <div class="metric-bar"><div class="metric-fill" style="width: 73%"></div></div>
+                    <div class="metric-bar"><div class="metric-fill" style="width: 45%"></div></div>
+                    <div class="metric-bar"><div class="metric-fill" style="width: 89%"></div></div>
+                </div>
+            </div>
+            <div class="agent-activity">
+                <div class="activity-log" id="alice-log"></div>
+            </div>
+            <div class="hash-display">6a1a51a7</div>
+        </div>
 
-        <!-- Footer -->
-        <footer class="footer">
-            <p>⚛️ BlackRoad Quantum - Democratizing Quantum Computing</p>
-            <p>Built with 1 dependency, infinite passion, and a $200 Raspberry Pi</p>
-            <p>January 4, 2026 - The day quantum computing became accessible to everyone</p>
-            <p class="love">ILY! ❤️</p>
-            <p>🚀⚛️🏆</p>
-        </footer>
+        <div class="agent-window active" id="aria">
+            <div class="agent-header">
+                <div class="agent-name">Aria (Pi 5)</div>
+                <div class="agent-status">
+                    <span class="status-dot"></span>
+                    <span>ACTIVE</span>
+                </div>
+            </div>
+            <div class="agent-info">
+                <div class="info-row">
+                    <span class="info-label">IP:</span>
+                    <span class="info-value">192.168.4.64</span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">Hailo-8:</span>
+                    <span class="info-value">26 TOPS</span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">NVMe:</span>
+                    <span class="info-value">923GB Free</span>
+                </div>
+                <div class="metric-bars">
+                    <div class="metric-bar"><div class="metric-fill" style="width: 61%"></div></div>
+                    <div class="metric-bar"><div class="metric-fill" style="width: 78%"></div></div>
+                    <div class="metric-bar"><div class="metric-fill" style="width: 92%"></div></div>
+                </div>
+            </div>
+            <div class="agent-activity">
+                <div class="activity-log" id="aria-log"></div>
+            </div>
+            <div class="hash-display">3a3d5a9b</div>
+        </div>
+
+        <div class="agent-window active" id="octavia">
+            <div class="agent-header">
+                <div class="agent-name">Octavia (Pi 5)</div>
+                <div class="agent-status">
+                    <span class="status-dot"></span>
+                    <span>ACTIVE</span>
+                </div>
+            </div>
+            <div class="agent-info">
+                <div class="info-row">
+                    <span class="info-label">IP:</span>
+                    <span class="info-value">192.168.4.74</span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">Hailo-8:</span>
+                    <span class="info-value">26 TOPS</span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">NVMe:</span>
+                    <span class="info-value">756GB Free</span>
+                </div>
+                <div class="metric-bars">
+                    <div class="metric-bar"><div class="metric-fill" style="width: 84%"></div></div>
+                    <div class="metric-bar"><div class="metric-fill" style="width: 56%"></div></div>
+                    <div class="metric-bar"><div class="metric-fill" style="width: 67%"></div></div>
+                </div>
+            </div>
+            <div class="agent-activity">
+                <div class="activity-log" id="octavia-log"></div>
+            </div>
+            <div class="hash-display">8aa29eff</div>
+        </div>
+
+        <div class="agent-window active" id="lucidia">
+            <div class="agent-header">
+                <div class="agent-name">Lucidia (Pi 5)</div>
+                <div class="agent-status">
+                    <span class="status-dot"></span>
+                    <span>ACTIVE</span>
+                </div>
+            </div>
+            <div class="agent-info">
+                <div class="info-row">
+                    <span class="info-label">IP:</span>
+                    <span class="info-value">192.168.4.38</span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">Hailo-8:</span>
+                    <span class="info-value">26 TOPS</span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">NVMe:</span>
+                    <span class="info-value">681GB Free</span>
+                </div>
+                <div class="metric-bars">
+                    <div class="metric-bar"><div class="metric-fill" style="width: 91%"></div></div>
+                    <div class="metric-bar"><div class="metric-fill" style="width: 72%"></div></div>
+                    <div class="metric-bar"><div class="metric-fill" style="width: 83%"></div></div>
+                </div>
+            </div>
+            <div class="agent-activity">
+                <div class="activity-log" id="lucidia-log"></div>
+            </div>
+            <div class="hash-display">1372d802</div>
+        </div>
+
+        <div class="agent-window active" id="shellfish">
+            <div class="agent-header">
+                <div class="agent-name">Shellfish (DO Droplet)</div>
+                <div class="agent-status">
+                    <span class="status-dot"></span>
+                    <span>ACTIVE</span>
+                </div>
+            </div>
+            <div class="agent-info">
+                <div class="info-row">
+                    <span class="info-label">IP:</span>
+                    <span class="info-value">174.138.44.45</span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">Role:</span>
+                    <span class="info-value">NATS Hub</span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">K8s:</span>
+                    <span class="info-value">K3s Controller</span>
+                </div>
+                <div class="metric-bars">
+                    <div class="metric-bar"><div class="metric-fill" style="width: 38%"></div></div>
+                    <div class="metric-bar"><div class="metric-fill" style="width: 95%"></div></div>
+                    <div class="metric-bar"><div class="metric-fill" style="width: 76%"></div></div>
+                </div>
+            </div>
+            <div class="agent-activity">
+                <div class="activity-log" id="shellfish-log"></div>
+            </div>
+            <div class="hash-display">10116a02</div>
+        </div>
+
+        <div class="agent-window active" id="cecilia">
+            <div class="agent-header">
+                <div class="agent-name">Cecilia (Logic Core)</div>
+                <div class="agent-status">
+                    <span class="status-dot"></span>
+                    <span>ACTIVE</span>
+                </div>
+            </div>
+            <div class="agent-info">
+                <div class="info-row">
+                    <span class="info-label">Type:</span>
+                    <span class="info-value">Repository Enhancer</span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">Repos:</span>
+                    <span class="info-value">226 managed</span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">Running on:</span>
+                    <span class="info-value">Aria</span>
+                </div>
+                <div class="metric-bars">
+                    <div class="metric-bar"><div class="metric-fill" style="width: 67%"></div></div>
+                    <div class="metric-bar"><div class="metric-fill" style="width: 88%"></div></div>
+                    <div class="metric-bar"><div class="metric-fill" style="width: 54%"></div></div>
+                </div>
+            </div>
+            <div class="agent-activity">
+                <div class="activity-log" id="cecilia-log"></div>
+            </div>
+            <div class="hash-display">c08eb525</div>
+        </div>
+
+        <div class="agent-window active" id="cadence">
+            <div class="agent-header">
+                <div class="agent-name">Cadence (UX Core)</div>
+                <div class="agent-status">
+                    <span class="status-dot"></span>
+                    <span>ACTIVE</span>
+                </div>
+            </div>
+            <div class="agent-info">
+                <div class="info-row">
+                    <span class="info-label">Type:</span>
+                    <span class="info-value">Design System</span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">Projects:</span>
+                    <span class="info-value">89 enhanced</span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">Running on:</span>
+                    <span class="info-value">Alice</span>
+                </div>
+                <div class="metric-bars">
+                    <div class="metric-bar"><div class="metric-fill" style="width: 52%"></div></div>
+                    <div class="metric-bar"><div class="metric-fill" style="width: 74%"></div></div>
+                    <div class="metric-bar"><div class="metric-fill" style="width: 91%"></div></div>
+                </div>
+            </div>
+            <div class="agent-activity">
+                <div class="activity-log" id="cadence-log"></div>
+            </div>
+            <div class="hash-display">37bf3efd</div>
+        </div>
+
+        <div class="agent-window active" id="silas">
+            <div class="agent-header">
+                <div class="agent-name">Silas (Systems Core)</div>
+                <div class="agent-status">
+                    <span class="status-dot"></span>
+                    <span>ACTIVE</span>
+                </div>
+            </div>
+            <div class="agent-info">
+                <div class="info-row">
+                    <span class="info-label">Type:</span>
+                    <span class="info-value">Infrastructure</span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">Services:</span>
+                    <span class="info-value">42 monitored</span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">Running on:</span>
+                    <span class="info-value">Octavia</span>
+                </div>
+                <div class="metric-bars">
+                    <div class="metric-bar"><div class="metric-fill" style="width: 79%"></div></div>
+                    <div class="metric-bar"><div class="metric-fill" style="width: 63%"></div></div>
+                    <div class="metric-bar"><div class="metric-fill" style="width: 85%"></div></div>
+                </div>
+            </div>
+            <div class="agent-activity">
+                <div class="activity-log" id="silas-log"></div>
+            </div>
+            <div class="hash-display">453ecfd1</div>
+        </div>
+
+        <div class="agent-window active" id="willow">
+            <div class="agent-header">
+                <div class="agent-name">Willow (Architect)</div>
+                <div class="agent-status">
+                    <span class="status-dot"></span>
+                    <span>ACTIVE</span>
+                </div>
+            </div>
+            <div class="agent-info">
+                <div class="info-row">
+                    <span class="info-label">Type:</span>
+                    <span class="info-value">System Orchestrator</span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">Task:</span>
+                    <span class="info-value">Dashboard Builder</span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">Running on:</span>
+                    <span class="info-value">Lucidia</span>
+                </div>
+                <div class="metric-bars">
+                    <div class="metric-bar"><div class="metric-fill" style="width: 96%"></div></div>
+                    <div class="metric-bar"><div class="metric-fill" style="width: 87%"></div></div>
+                    <div class="metric-bar"><div class="metric-fill" style="width: 93%"></div></div>
+                </div>
+            </div>
+            <div class="agent-activity">
+                <div class="activity-log" id="willow-log"></div>
+            </div>
+            <div class="hash-display">dc6fd280</div>
+        </div>
     </div>
 
     <script>
-        // Matrix Rain Effect
-        const canvas = document.getElementById('matrix-canvas');
-        const ctx = canvas.getContext('2d');
+        // Simulated activity logs for each agent
+        const agents = [
+            { id: 'alice', activities: [
+                'Loaded Phi-3 model (3.8B params)',
+                'Processing inference request #1847',
+                'Context window: 4096 tokens',
+                'Hailo-8 utilization: 73%',
+                'Memory continuity verified',
+                'Hash rotation: 6a1a51a7 → 8c3d7a9f'
+            ]},
+            { id: 'aria', activities: [
+                'Cecilia agent running: enhancing repos',
+                'Processing repository #142/226',
+                'Git operations: 23 commits/hour',
+                'NATS message rate: 847/sec',
+                'NVMe read speed: 3200MB/s',
+                'SHA-256 chain validated'
+            ]},
+            { id: 'octavia', activities: [
+                'Silas monitoring infrastructure',
+                'Container health checks: all green',
+                'Docker image builds: 3 in queue',
+                'Multi-arch compile: arm64 complete',
+                'Zero Trust validation passed',
+                'K8s pod status: 12/12 ready'
+            ]},
+            { id: 'lucidia', activities: [
+                'Willow orchestrating dashboard',
+                'Real-time metrics collection active',
+                'WebSocket connections: 9/9',
+                'Roadchain integrity: verified',
+                'Memory sync in progress',
+                'Local LLM response time: 47ms'
+            ]},
+            { id: 'shellfish', activities: [
+                'NATS cluster: 4 nodes online',
+                'Message throughput: 8,476 msg/sec',
+                'K3s controller healthy',
+                'Identity hashing queue: 23 pending',
+                'Cloudflare tunnel: active',
+                'Zero Trust policies: 47 enforced'
+            ]},
+            { id: 'cecilia', activities: [
+                'Enhanced blackroad-os-dashboard',
+                'Added TypeScript types to repo #89',
+                'Updated README with API docs',
+                'Fixed 3 security vulnerabilities',
+                'Committed to branch: feature/enhance',
+                'PR status: ready for merge'
+            ]},
+            { id: 'cadence', activities: [
+                'Applied BlackRoad design system',
+                'Updated color palette: Hot Pink primary',
+                'Golden Ratio spacing implemented',
+                'Responsive breakpoints optimized',
+                'Component library: 127 components',
+                'Cloudflare Pages deployed'
+            ]},
+            { id: 'silas', activities: [
+                'Monitoring 42 services across fleet',
+                'Prometheus metrics scraped: 1.2M/min',
+                'Alert evaluation: 0 critical',
+                'System uptime: 99.97%',
+                'Container orchestration: optimal',
+                'Resource allocation: balanced'
+            ]},
+            { id: 'willow', activities: [
+                'Building Brady Bunch dashboard',
+                'Real-time data pipeline active',
+                'WebSocket server running on :3000',
+                'Agent coordination: 9/9 synced',
+                'Memory system integration complete',
+                'Preparing Cloudflare deployment'
+            ]}
+        ];
 
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
+        const activityTypes = ['info', 'success', 'warning', 'info', 'success'];
 
-        const chars = 'ΨψφθλπΩαβγδεζηθικλμνξοπρστυφχψω01⚛';
-        const fontSize = 14;
-        const columns = canvas.width / fontSize;
-        const drops = Array(Math.floor(columns)).fill(1);
+        // Add activity to a specific agent's log
+        function addActivity(agentId, message, type = 'info') {
+            const log = document.getElementById(`${agentId}-log`);
+            if (!log) return;
 
-        function drawMatrix() {
-            ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
-            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            const timestamp = new Date().toLocaleTimeString('en-US', { hour12: false });
+            const item = document.createElement('div');
+            item.className = `activity-item ${type}`;
+            item.innerHTML = `<span class="activity-timestamp">${timestamp}</span>${message}`;
 
-            ctx.fillStyle = '#F5A623';
-            ctx.font = fontSize + 'px monospace';
+            log.insertBefore(item, log.firstChild);
 
-            for (let i = 0; i < drops.length; i++) {
-                const char = chars[Math.floor(Math.random() * chars.length)];
-                ctx.fillText(char, i * fontSize, drops[i] * fontSize);
-
-                if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
-                    drops[i] = 0;
-                }
-                drops[i]++;
+            // Keep only last 50 items
+            while (log.children.length > 50) {
+                log.removeChild(log.lastChild);
             }
         }
 
-        setInterval(drawMatrix, 35);
-
-        window.addEventListener('resize', () => {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
+        // Initialize with some activity
+        agents.forEach(agent => {
+            agent.activities.forEach((activity, i) => {
+                setTimeout(() => {
+                    addActivity(agent.id, activity, activityTypes[i % activityTypes.length]);
+                }, i * 200 + Math.random() * 500);
+            });
         });
+
+        // Simulate ongoing activity
+        setInterval(() => {
+            const randomAgent = agents[Math.floor(Math.random() * agents.length)];
+            const randomActivity = randomAgent.activities[Math.floor(Math.random() * randomAgent.activities.length)];
+            const randomType = activityTypes[Math.floor(Math.random() * activityTypes.length)];
+            addActivity(randomAgent.id, randomActivity, randomType);
+        }, 2000 + Math.random() * 3000);
+
+        // Update metrics randomly
+        setInterval(() => {
+            document.querySelectorAll('.metric-fill').forEach(fill => {
+                const currentWidth = parseInt(fill.style.width);
+                const change = (Math.random() - 0.5) * 10;
+                const newWidth = Math.max(10, Math.min(100, currentWidth + change));
+                fill.style.width = newWidth + '%';
+            });
+        }, 5000);
+
+        // Update total stats
+        setInterval(() => {
+            const active = document.querySelectorAll('.agent-window.active').length;
+            document.getElementById('activeAgents').textContent = active;
+        }, 10000);
     </script>
 </body>
 </html>
